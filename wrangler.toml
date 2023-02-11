@@ -1,0 +1,15 @@
+name = "homie-dns"
+main = "src/index.ts"
+compatibility_date = "2023-02-07"
+
+routes = ["dns.homie.sh/*"]
+workers_dev = false
+node_compat = true
+
+kv_namespaces = [
+  { binding = "Storage", id = "f39b7b9d26f94560bfd1a23c8d33c3b9", preview_id = "f39b7b9d26f94560bfd1a23c8d33c3b9" }
+]
+
+[miniflare]
+kv_persist = "redis://10.8.0.3:63"
+env_file = ".env"
