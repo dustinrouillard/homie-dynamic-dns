@@ -1,22 +1,12 @@
 import { CraftedResponse, ParsedRequest } from "./types/Routes";
 
 export async function Authentication(request: ParsedRequest, response: CraftedResponse) {
-  if (!request.headers.cookie && !request.headers.authorization) return response.status(403).send({ error: 'requires_authentication' });
-
-  const cookie = request.headers.cookie;
-
-  let value: string = request.headers.authorization;
-  if (!value && cookie) {
-    value = cookie.split('dns_session=')[1]?.split(';')[0];
-  }
+  if (!request.headers.authorization) return response.status(403).send({ error: 'requires_authentication' });
 
   let record_id;
-  if (!value) return response.status(403).send({ error: 'requires_authentication' });
-  if (!value.includes('_')) {
-    [record_id, value] = Buffer.from(value.replace(/Basic /, ''), 'base64').toString('utf8').split(':');
-  }
+  if (!request.headers.authorization) return response.status(403).send({ error: 'requires_authentication' });
 
-  const [token_type, token] = value.split('_');
+  const [token_type, token] = request.headers.authorization.split('_');
   if (!token) return response.status(403).send({ error: 'requires_authentication' });
 
   if (!['at', 'session'].includes(token_type)) return response.status(400).send({ error: 'invalid_token_type' });

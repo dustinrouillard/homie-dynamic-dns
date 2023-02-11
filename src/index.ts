@@ -8,7 +8,7 @@ addEventListener('fetch', (event) => {
     new Promise(async (resolve) => {
       const url = new URL(event.request.url);
 
-      const request = event.request.clone();
+      const request = event.request;
       const buffer = await event.request.clone().arrayBuffer();
       const headers = Object.fromEntries([...request.headers]);
       const method = request.method as Method;
@@ -77,6 +77,10 @@ addEventListener('fetch', (event) => {
 
           if (!mw) return mw;
         }
+
+      if (method == 'OPTIONS') {
+        return res.send();
+      }
 
       route ? route.handler(req, res, context) : NotFound(req, res, context);
     }),

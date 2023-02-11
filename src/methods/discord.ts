@@ -30,8 +30,6 @@ export async function CallbackAuthentication(request: ParsedRequest<{ Query: { c
       await Storage.put(`tokens/${userToken}`, user.id.toString());
     }
 
-    response = response.header('set-cookie', `dns_session=${userToken}; HttpOnly; Expires=${new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)}`);
-
     return response.status(201).send({ id: user.id, token: userToken });
   } catch (error: any) {
     if (error && error.code) return response.status(400).send({ code: error.code });

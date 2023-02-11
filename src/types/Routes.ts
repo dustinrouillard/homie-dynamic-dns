@@ -1,6 +1,6 @@
 import Route from 'route-parser';
 
-export type Method = 'GET' | 'POST' | 'PATCH' | 'DELETE' | 'PUT';
+export type Method = 'GET' | 'POST' | 'PATCH' | 'DELETE' | 'PUT' | 'OPTIONS';
 
 export interface RequestGeneric {
   Body?: unknown;
