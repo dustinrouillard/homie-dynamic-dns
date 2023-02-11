@@ -42,6 +42,7 @@ addEventListener('fetch', (event) => {
         headers: {
           'access-control-allow-origin': '*',
           'access-control-allow-headers': '*',
+          'access-control-allow-methods': '*',
         },
         redirect: (target: string, code = 302) => {
           const response = Response.redirect(target, code);

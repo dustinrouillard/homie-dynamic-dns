@@ -5,7 +5,7 @@ export async function ListDNS(request: ParsedRequest, response: CraftedResponse,
   try {
     const { keys } = await Storage.list({ prefix: `ddns-by-id:${context.user.id}` });
 
-    return response.status(200).send(await Promise.all(keys.map(async ({ name }) => await Storage.get(name, 'json'))));
+    return response.status(200).send((await Promise.all(keys.map(async ({ name }) => await Storage.get(name, 'json')))).filter(item => item));
   } catch (error: any) {
     if (error instanceof ZodError)
       return response.status(500).send({ code: 'validation_error', error });

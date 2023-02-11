@@ -5,7 +5,7 @@ export const srvProtocols = ['TCP', 'UDP'] as const;
 export const allowedTypes = ['A', 'AAAA', 'CNAME', 'SRV'] as const;
 
 export const dnsRecord = z.object({
-  name: z.string(),
+  name: z.string().regex(/^[a-z0-9\.]+$/i),
   type: z.enum(allowedTypes),
   content: z.string(),
   ttl: z.number().optional(),
@@ -14,7 +14,7 @@ export const dnsRecord = z.object({
 export type CreateRecord = z.infer<typeof dnsRecord>;
 
 export const updatableDnsRecord = z.object({
-  name: z.string(),
+  name: z.string().regex(/^[a-z0-9\.]+$/i),
   content: z.string(),
   ttl: z.number().optional(),
   service: z.string().optional()
